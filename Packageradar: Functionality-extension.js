@@ -74,7 +74,7 @@
 		                	-moz-appearance: none;
 		                	appearance: none;
 		                	outline: 0;
-		                	/*background: #222;*/
+                                        margin-right: 10px;
 		                	height: 20px;
 		                	width: 20px;
 		                	border: 1px solid #444;
@@ -144,6 +144,12 @@
                 GM_setValue(track.getAttribute('data-utid'), event.target.checked);
             });
 
+            trackNumberActionsContainer.appendChild(markCheckbox);
+            markCheckbox.checked = !!GM_getValue(track.getAttribute('data-utid'));
+            let changeEvent = document.createEvent('HTMLEvents');
+            changeEvent.initEvent('change', false, true);
+            markCheckbox.dispatchEvent(changeEvent);
+
             let trackNumberActionsCopyTrack = document.createElement('button');
             trackNumberActionsCopyTrack.className = 'extender-actions-copy-button';
             trackNumberActionsCopyTrack.innerHTML = 'Copy #1';
@@ -161,15 +167,7 @@
                 trackNumberActionsCopyTrackOriginal.addEventListener('click', actionButtonHandler);
                 trackNumberActionsContainer.appendChild(trackNumberActionsCopyTrackOriginal);
             }
-
-            trackNumberActionsContainer.appendChild(markCheckbox);
             titleWrapper.appendChild(trackNumberActionsContainer);
-
-            markCheckbox.checked = !!GM_getValue(track.getAttribute('data-utid'));
-
-            let changeEvent = document.createEvent('HTMLEvents');
-            changeEvent.initEvent('change', false, true);
-            markCheckbox.dispatchEvent(changeEvent);
         };
 
         function actionButtonHandler(event) {
